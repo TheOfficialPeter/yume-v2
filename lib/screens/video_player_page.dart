@@ -714,22 +714,6 @@ class _VideoPlayerPageState extends State<VideoPlayerPage> {
     }
   }
 
-  Widget _buildOrientationAwarePlayer(BuildContext context) {
-    return StreamBuilder<NativeDeviceOrientation>(
-      stream: _orientationStream,
-      initialData: NativeDeviceOrientation.landscapeLeft,
-      builder: (context, snapshot) {
-        final quarterTurns = _quarterTurnsForOrientation(snapshot.data);
-        final content = _buildPlayerStack(context);
-        if (quarterTurns == 0) return content;
-        return RotatedBox(
-          quarterTurns: quarterTurns,
-          child: content,
-        );
-      },
-    );
-  }
-
   Widget _buildPlayerStack(BuildContext context) {
     return Stack(
       children: [
@@ -853,8 +837,15 @@ class _VideoPlayerPageState extends State<VideoPlayerPage> {
   Widget build(BuildContext context) {
     return Scaffold(
       backgroundColor: Colors.black,
-      body: _isLoading
-          ? Center(
+      body: StreamBuilder<NativeDeviceOrientation>(
+        stream: _orientationStream,
+        initialData: NativeDeviceOrientation.landscapeLeft,
+        builder: (context, snapshot) {
+          final quarterTurns = _quarterTurnsForOrientation(snapshot.data);
+          Widget content;
+
+          if (_isLoading) {
+            content = Center(
               child: Column(
                 mainAxisAlignment: MainAxisAlignment.center,
                 children: [
@@ -866,55 +857,64 @@ class _VideoPlayerPageState extends State<VideoPlayerPage> {
                   ),
                 ],
               ),
-            )
-          : _error != null
-              ? Center(
-                  child: Padding(
-                    padding: const EdgeInsets.all(16.0),
-                    child: Column(
-                      mainAxisAlignment: MainAxisAlignment.center,
-                      children: [
-                        const Icon(
-                          Icons.error_outline,
-                          size: 64,
-                          color: Colors.red,
-                        ),
-                        const SizedBox(height: 16),
-                        const Text(
-                          'Failed to load video',
-                          style: TextStyle(
-                            color: Colors.white,
-                            fontSize: 18,
-                            fontWeight: FontWeight.bold,
-                          ),
-                        ),
-                        const SizedBox(height: 8),
-                        Text(
-                          _error!,
-                          style: const TextStyle(color: Colors.white70),
-                          textAlign: TextAlign.center,
-                        ),
-                        const SizedBox(height: 24),
-                        ElevatedButton.icon(
-                          onPressed: _initializePlayer,
-                          icon: const Icon(Icons.refresh),
-                          label: const Text('Retry'),
-                        ),
-                        const SizedBox(height: 8),
-                        TextButton(
-                          onPressed: () => Navigator.of(context).pop(),
-                          child: const Text('Go Back'),
-                        ),
-                      ],
+            );
+          } else if (_error != null) {
+            content = Center(
+              child: Padding(
+                padding: const EdgeInsets.all(16.0),
+                child: Column(
+                  mainAxisAlignment: MainAxisAlignment.center,
+                  children: [
+                    const Icon(
+                      Icons.error_outline,
+                      size: 64,
+                      color: Colors.red,
                     ),
-                  ),
-                )
-              : _chewieController != null &&
-                      _chewieController!
-                          .videoPlayerController.value.isInitialized
-                  ? _buildOrientationAwarePlayer(context)
-                  : const Center(
-                      child: CircularProgressIndicator(color: Colors.white)),
+                    const SizedBox(height: 16),
+                    const Text(
+                      'Failed to load video',
+                      style: TextStyle(
+                        color: Colors.white,
+                        fontSize: 18,
+                        fontWeight: FontWeight.bold,
+                      ),
+                    ),
+                    const SizedBox(height: 8),
+                    Text(
+                      _error!,
+                      style: const TextStyle(color: Colors.white70),
+                      textAlign: TextAlign.center,
+                    ),
+                    const SizedBox(height: 24),
+                    ElevatedButton.icon(
+                      onPressed: _initializePlayer,
+                      icon: const Icon(Icons.refresh),
+                      label: const Text('Retry'),
+                    ),
+                    const SizedBox(height: 8),
+                    TextButton(
+                      onPressed: () => Navigator.of(context).pop(),
+                      child: const Text('Go Back'),
+                    ),
+                  ],
+                ),
+              ),
+            );
+          } else if (_chewieController != null &&
+              _chewieController!.videoPlayerController.value.isInitialized) {
+            content = _buildPlayerStack(context);
+          } else {
+            content = const Center(
+                child: CircularProgressIndicator(color: Colors.white));
+          }
+
+          if (quarterTurns == 0) return content;
+          return RotatedBox(
+            quarterTurns: quarterTurns,
+            child: content,
+          );
+        },
+      ),
     );
   }
 }
