@@ -37,8 +37,21 @@ jobs:
         run: |
           echo "HIANIME_API_URL=${{ secrets.HIANIME_API_URL || 'https://api.example.com' }}" > .env
 
+      - name: Verify Flutter configuration
+        run: |
+          flutter doctor -v
+          flutter config --android-sdk $ANDROID_SDK_ROOT
+
+      - name: Preconfigure Flutter
+        run: flutter precache --android
+
       - name: Get dependencies
         run: flutter pub get
+
+      - name: Create local.properties
+        run: |
+          echo "sdk.dir=$ANDROID_SDK_ROOT" > android/local.properties
+          echo "flutter.sdk=$FLUTTER_ROOT" >> android/local.properties
 
       - name: Run Flutter analyze
         run: flutter analyze
