@@ -1,4 +1,4 @@
-package com.example.yume
+package com.github.theofficialpeter.yume
 
 import io.flutter.embedding.android.FlutterActivity
 
