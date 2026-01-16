@@ -17,20 +17,24 @@ subprojects {
 }
 
 subprojects {
-    project.evaluationDependsOn(":app")
+    if (project.name != "app") {
+        project.evaluationDependsOn(":app")
+    }
 
-    afterEvaluate {
-        if (project.plugins.hasPlugin("com.android.library")) {
-            extensions.configure<com.android.build.gradle.LibraryExtension>("android") {
-                compileSdk = 34
+    if (project.name != "app") {
+        afterEvaluate {
+            if (project.plugins.hasPlugin("com.android.library")) {
+                extensions.configure<com.android.build.gradle.LibraryExtension>("android") {
+                    compileSdk = 34
 
-                defaultConfig {
-                    minSdk = 21
-                }
+                    defaultConfig {
+                        minSdk = 21
+                    }
 
-                compileOptions {
-                    sourceCompatibility = JavaVersion.VERSION_11
-                    targetCompatibility = JavaVersion.VERSION_11
+                    compileOptions {
+                        sourceCompatibility = JavaVersion.VERSION_11
+                        targetCompatibility = JavaVersion.VERSION_11
+                    }
                 }
             }
         }
