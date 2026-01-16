@@ -55,10 +55,10 @@ class ThemeService extends ChangeNotifier {
 
     final prefs = await SharedPreferences.getInstance();
     // Store color as ARGB integer
-    final colorInt = (color.a.toInt() << 24) |
-        (color.r.toInt() << 16) |
-        (color.g.toInt() << 8) |
-        color.b.toInt();
+    final colorInt = (color.alpha << 24) |
+        (color.red << 16) |
+        (color.green << 8) |
+        color.blue;
     await prefs.setInt(_seedColorKey, colorInt);
   }
 

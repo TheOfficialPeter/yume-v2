@@ -315,7 +315,7 @@ class _AnimeDetailPageState extends State<AnimeDetailPage> {
     if (imageUrl == null) {
       return Container(
         key: const ValueKey('no-image'),
-        color: Colors.grey.withValues(alpha: 0.3),
+        color: Colors.grey.withOpacity(0.3),
       );
     }
 
@@ -350,7 +350,7 @@ class _AnimeDetailPageState extends State<AnimeDetailPage> {
                   fit: BoxFit.cover,
                   httpHeaders: const {'User-Agent': 'Mozilla/5.0'},
                   errorWidget: (context, url, error) => Container(
-                    color: Colors.grey.withValues(alpha: 0.3),
+                    color: Colors.grey.withOpacity(0.3),
                     child: const Center(
                       child: Icon(Icons.broken_image, size: 48),
                     ),
@@ -358,7 +358,7 @@ class _AnimeDetailPageState extends State<AnimeDetailPage> {
                 );
               }
               return Container(
-                color: Colors.grey.withValues(alpha: 0.3),
+                color: Colors.grey.withOpacity(0.3),
                 child: const Center(child: Icon(Icons.broken_image, size: 48)),
               );
             },
@@ -389,7 +389,7 @@ class _AnimeDetailPageState extends State<AnimeDetailPage> {
             leading: Container(
               margin: const EdgeInsets.all(8.0),
               decoration: BoxDecoration(
-                color: Colors.black.withValues(alpha: 0.5),
+                color: Colors.black.withOpacity(0.5),
                 shape: BoxShape.circle,
               ),
               child: IconButton(
@@ -854,7 +854,7 @@ class _AnimeDetailPageState extends State<AnimeDetailPage> {
               placeholder: (context, url) => Container(
                 width: 120,
                 height: 67.5,
-                color: Colors.grey.withValues(alpha: 0.3),
+                color: Colors.grey.withOpacity(0.3),
                 child: const Center(
                   child: SizedBox(
                     width: 20,
@@ -866,7 +866,7 @@ class _AnimeDetailPageState extends State<AnimeDetailPage> {
               errorWidget: (context, url, error) => Container(
                 width: 120,
                 height: 67.5,
-                color: Colors.grey.withValues(alpha: 0.3),
+                color: Colors.grey.withOpacity(0.3),
                 child: Center(
                   child: CircleAvatar(
                     child: Text(

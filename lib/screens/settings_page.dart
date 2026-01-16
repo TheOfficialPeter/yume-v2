@@ -101,49 +101,61 @@ class SettingsPage extends StatelessWidget {
       context: context,
       builder: (context) => AlertDialog(
         title: const Text('Theme Mode'),
-        content: RadioGroup<ThemeMode>(
-          groupValue: themeService.themeMode,
-          onChanged: (value) {
-            if (value != null) {
-              themeService.setThemeMode(value);
-              Navigator.pop(context);
-            }
-          },
-          child: Column(
-            mainAxisSize: MainAxisSize.min,
-            children: [
-              ListTile(
-                title: const Text('Light'),
-                leading: Radio<ThemeMode>(
-                  value: ThemeMode.light,
-                ),
-                onTap: () {
-                  themeService.setThemeMode(ThemeMode.light);
-                  Navigator.pop(context);
+        content: Column(
+          mainAxisSize: MainAxisSize.min,
+          children: [
+            ListTile(
+              title: const Text('Light'),
+              leading: Radio<ThemeMode>(
+                value: ThemeMode.light,
+                groupValue: themeService.themeMode,
+                onChanged: (value) {
+                  if (value != null) {
+                    themeService.setThemeMode(value);
+                    Navigator.pop(context);
+                  }
                 },
               ),
-              ListTile(
-                title: const Text('Dark'),
-                leading: Radio<ThemeMode>(
-                  value: ThemeMode.dark,
-                ),
-                onTap: () {
-                  themeService.setThemeMode(ThemeMode.dark);
-                  Navigator.pop(context);
+              onTap: () {
+                themeService.setThemeMode(ThemeMode.light);
+                Navigator.pop(context);
+              },
+            ),
+            ListTile(
+              title: const Text('Dark'),
+              leading: Radio<ThemeMode>(
+                value: ThemeMode.dark,
+                groupValue: themeService.themeMode,
+                onChanged: (value) {
+                  if (value != null) {
+                    themeService.setThemeMode(value);
+                    Navigator.pop(context);
+                  }
                 },
               ),
-              ListTile(
-                title: const Text('System default'),
-                leading: Radio<ThemeMode>(
-                  value: ThemeMode.system,
-                ),
-                onTap: () {
-                  themeService.setThemeMode(ThemeMode.system);
-                  Navigator.pop(context);
+              onTap: () {
+                themeService.setThemeMode(ThemeMode.dark);
+                Navigator.pop(context);
+              },
+            ),
+            ListTile(
+              title: const Text('System default'),
+              leading: Radio<ThemeMode>(
+                value: ThemeMode.system,
+                groupValue: themeService.themeMode,
+                onChanged: (value) {
+                  if (value != null) {
+                    themeService.setThemeMode(value);
+                    Navigator.pop(context);
+                  }
                 },
               ),
-            ],
-          ),
+              onTap: () {
+                themeService.setThemeMode(ThemeMode.system);
+                Navigator.pop(context);
+              },
+            ),
+          ],
         ),
       ),
     );
@@ -198,7 +210,7 @@ class SettingsPage extends StatelessWidget {
                           border: isSelected
                               ? Border.all(color: color, width: 3)
                               : Border.all(
-                                  color: Colors.grey.withValues(alpha: 0.3),
+                                  color: Colors.grey.withOpacity(0.3),
                                   width: 1),
                         ),
                         child: ClipOval(
@@ -213,7 +225,7 @@ class SettingsPage extends StatelessWidget {
                               ),
                               if (isSelected)
                                 Container(
-                                  color: Colors.black.withValues(alpha: 0.3),
+                                  color: Colors.black.withOpacity(0.3),
                                   child: const Center(
                                     child: Icon(Icons.check,
                                         color: Colors.white, size: 24),

@@ -176,18 +176,18 @@ class _GridAnimeCard extends StatelessWidget {
                       width: double.infinity,
                       httpHeaders: const {'User-Agent': 'Mozilla/5.0'},
                       placeholder: (context, url) => Container(
-                        color: Colors.grey.withValues(alpha: 0.3),
+                        color: Colors.grey.withOpacity(0.3),
                         child: const Center(child: CircularProgressIndicator()),
                       ),
                       errorWidget: (context, url, error) => Container(
-                        color: Colors.grey.withValues(alpha: 0.3),
+                        color: Colors.grey.withOpacity(0.3),
                         child: const Center(
                           child: Icon(Icons.broken_image, size: 48),
                         ),
                       ),
                     )
                   : Container(
-                      color: Colors.grey.withValues(alpha: 0.3),
+                      color: Colors.grey.withOpacity(0.3),
                       child: const Center(
                         child: Icon(Icons.image_outlined, size: 48),
                       ),

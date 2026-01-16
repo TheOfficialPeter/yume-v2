@@ -69,9 +69,7 @@ class _ContinueWatchingCard extends StatelessWidget {
         width: 180,
         decoration: BoxDecoration(
           borderRadius: BorderRadius.circular(16),
-          color: Theme.of(context).colorScheme.surfaceVariant.withValues(
-                alpha: 0.4,
-              ),
+          color: Theme.of(context).colorScheme.surfaceVariant.withOpacity(0.4),
         ),
         clipBehavior: Clip.antiAlias,
         child: Column(
@@ -134,7 +132,7 @@ class _ContinueWatchingCard extends StatelessWidget {
                             vertical: 4,
                           ),
                           decoration: BoxDecoration(
-                            color: Colors.white.withValues(alpha: 0.2),
+                            color: Colors.white.withOpacity(0.2),
                             borderRadius: BorderRadius.circular(12),
                           ),
                           child: Text(

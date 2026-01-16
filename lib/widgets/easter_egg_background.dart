@@ -90,7 +90,7 @@ class DiagonalLogoGridPainter extends CustomPainter {
   @override
   void paint(Canvas canvas, Size size) {
     final paint = Paint()
-      ..color = Colors.white.withValues(alpha: 0.015);
+      ..color = Colors.white.withOpacity(0.015);
 
     final logoSize = 100.0;
     final spacing = 150.0; // Distance between logos
