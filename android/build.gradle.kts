@@ -15,8 +15,26 @@ subprojects {
     val newSubprojectBuildDir: Directory = newBuildDir.dir(project.name)
     project.layout.buildDirectory.value(newSubprojectBuildDir)
 }
+
 subprojects {
     project.evaluationDependsOn(":app")
+
+    afterEvaluate {
+        if (project.plugins.hasPlugin("com.android.library")) {
+            extensions.configure<com.android.build.gradle.LibraryExtension>("android") {
+                compileSdk = 34
+
+                defaultConfig {
+                    minSdk = 21
+                }
+
+                compileOptions {
+                    sourceCompatibility = JavaVersion.VERSION_11
+                    targetCompatibility = JavaVersion.VERSION_11
+                }
+            }
+        }
+    }
 }
 
 tasks.register<Delete>("clean") {
