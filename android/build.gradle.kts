@@ -5,6 +5,18 @@ allprojects {
     }
 }
 
+val flutterCompileSdkVersion = project.properties["flutter.compileSdkVersion"]?.toString()?.toIntOrNull() ?: 34
+val flutterTargetSdkVersion = project.properties["flutter.targetSdkVersion"]?.toString()?.toIntOrNull() ?: 34
+val flutterMinSdkVersion = project.properties["flutter.minSdkVersion"]?.toString()?.toIntOrNull() ?: 21
+
+extra.apply {
+    set("flutter", mapOf(
+        "compileSdkVersion" to flutterCompileSdkVersion,
+        "targetSdkVersion" to flutterTargetSdkVersion,
+        "minSdkVersion" to flutterMinSdkVersion
+    ))
+}
+
 val newBuildDir: Directory =
     rootProject.layout.buildDirectory
         .dir("../../build")
